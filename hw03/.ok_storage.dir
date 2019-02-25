@@ -1,0 +1,7 @@
+'has_seven-correct', (0, 70)
+'pingpong-correct', (512, 70)
+'taxicab-correct', (1024, 70)
+'squares-correct', (1536, 70)
+'count_change-correct', (2048, 70)
+'move_stack-correct', (2560, 70)
+'make_anonymous_factorial-correct', (3072, 70)
