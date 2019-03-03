@@ -19,6 +19,14 @@ def make_counter():
     5
     """
     "*** YOUR CODE HERE ***"
+    d = dict()
+    def counter(obj):
+        if (obj in d):
+            d[obj] += 1
+        else:
+            d[obj] = 1
+        return d[obj]
+    return counter
 
 def make_fib():
     """Returns a function that returns the next Fibonacci number
@@ -40,6 +48,27 @@ def make_fib():
     12
     """
     "*** YOUR CODE HERE ***"
+    last1 = 0
+    last2 = 1
+    first = True
+    second = True
+    def fib():
+        nonlocal last1
+        nonlocal last2
+        nonlocal first
+        nonlocal second
+        if (first):
+            first = False
+            return 0
+        elif (second):
+            second = False
+            return 1
+        else:
+            summ = last1 + last2
+            last1 = last2
+            last2 = summ
+        return summ
+    return fib
 
 def make_withdraw(balance, password):
     """Return a password-protected withdraw function.
@@ -70,6 +99,22 @@ def make_withdraw(balance, password):
     True
     """
     "*** YOUR CODE HERE ***"
+    passHash = hash(password)
+    tries = []
+    def withdraw(amount, password):
+        nonlocal balance
+        if (len(tries)==3):
+            return 'Your account is locked. Attempts: ' + str(tries)
+        if (passHash==hash(password)):
+            if (amount<=balance):
+                balance -= amount
+                return balance
+            else:
+                return 'Insufficient funds'
+        else:
+            tries.append(password)
+            return 'Incorrect password'
+    return withdraw
 
 def make_joint(withdraw, old_password, new_password):
     """Return a password-protected withdraw function that has joint access to
@@ -110,6 +155,17 @@ def make_joint(withdraw, old_password, new_password):
     "Your account is locked. Attempts: ['my', 'secret', 'password']"
     """
     "*** YOUR CODE HERE ***"
+    oldMessage = withdraw(0, old_password)
+    if (type(oldMessage)==str):
+        return oldMessage
+    jointpass = hash(new_password)
+    def joint_account(amount, password):
+        if (hash(password)==hash(old_password) or hash(password)==jointpass):
+            return withdraw(amount, old_password)
+        else:
+            return withdraw(amount, password)
+    return joint_account
+    
 
 def preorder(t):
     """Return a list of the entries in this tree in the order that they
@@ -122,6 +178,12 @@ def preorder(t):
     [2, 4, 6]
     """
     "*** YOUR CODE HERE ***"
+    result = [label(t)]
+    if (is_leaf(t)):
+        return result
+    for sub in branches(t):
+        result += preorder(sub)
+    return result
 
 class Mint:
     """A mint creates coins by stamping on years.
@@ -154,15 +216,19 @@ class Mint:
 
     """
     current_year = 2017
+    year = 2017
 
     def __init__(self):
         self.update()
 
     def create(self, kind):
         "*** YOUR CODE HERE ***"
+        return kind(self.year)
 
     def update(self):
         "*** YOUR CODE HERE ***"
+        self.year = self.current_year
+        
 
 class Coin:
     def __init__(self, year):
@@ -170,6 +236,10 @@ class Coin:
 
     def worth(self):
         "*** YOUR CODE HERE ***"
+        if Mint.current_year - self.year - 50>0:
+            return self.cents + Mint.current_year - self.year - 50
+        else:
+            return self.cents
 
 class Nickel(Coin):
     cents = 5
