@@ -1,0 +1,8 @@
+'replace_leaf-correct', (0, 70)
+'prune_leaves-correct', (512, 70)
+'weight-correct', (1024, 70)
+'total_weight-correct', (1536, 70)
+'balanced-correct', (2048, 70)
+'totals_tree-correct', (2560, 70)
+'one-correct', (3072, 70)
+'two-correct', (3584, 70)
