@@ -107,3 +107,9 @@ def generate_paths(t, x):
     [[0, 2], [0, 2, 1, 2]]
     """
     "*** YOUR CODE HERE ***"
+    def inner_gen(t, x, sofar):
+        if (t.label==x):
+            yield sofar
+        for child in t.branches:
+            yield from inner_gen(child, x, sofar+[child.label])
+    yield from inner_gen(t, x, [t.label])
